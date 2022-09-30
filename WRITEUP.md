@@ -40,4 +40,5 @@ Using `App Service` is much simpler and faster than developing using `Virtual Ma
 
 _Detail how the app and any other needs would have to change for you to change your decision in the last section._
 
-I would choose virtual machines to deploy this application in future if i gain traffic in the site or scale the application.
+I would choose virtual machines to deploy this application in future if I would require full
+access and control of the resources like the operating system, network and security configurations, deployment, management among others. This is because app service offer a limited access to the host server.
