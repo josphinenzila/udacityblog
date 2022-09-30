@@ -86,7 +86,7 @@ def authorized():
         app.logger.error('Authorization Failed, go back home')
         return redirect(url_for("home"))  # No-OP. Goes back to Index page
     if "error" in request.args:  # Authentication/Authorization failure
-         app.logger.error('Authentication/Authorization failure')
+        app.logger.error('Authentication/Authorization failure')
         return render_template("auth_error.html", result=request.args)
     if request.args.get('code'):
         cache = _load_cache()
