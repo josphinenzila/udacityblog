@@ -83,8 +83,10 @@ def login():
 @app.route(Config.REDIRECT_PATH)  # Its absolute URL must match your app's redirect_uri set in AAD
 def authorized():
     if request.args.get('state') != session.get("state"):
+        app.logger.error('Authorization Failed, go back home')
         return redirect(url_for("home"))  # No-OP. Goes back to Index page
     if "error" in request.args:  # Authentication/Authorization failure
+         app.logger.error('Authentication/Authorization failure')
         return render_template("auth_error.html", result=request.args)
     if request.args.get('code'):
         cache = _load_cache()
@@ -100,6 +102,7 @@ def authorized():
         user = User.query.filter_by(username="admin").first()
         login_user(user)
         _save_cache(cache)
+    app.logger.info('The User logged successfully')
     return redirect(url_for('home'))
 
 @app.route('/logout')
@@ -113,6 +116,7 @@ def logout():
             Config.AUTHORITY + "/oauth2/v2.0/logout" +
             "?post_logout_redirect_uri=" + url_for("login", _external=True))
 
+    app.logger.info('The User logout successfully')
     return redirect(url_for('login'))
 
 def _load_cache():
